@@ -1,0 +1,30 @@
+from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from langserve import add_routes
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# import packages
+# from vertexai_chuck_norris.chain import chain as vertexai_chuck_norris_chain
+from rag_opensearch import chain as rag_opensearch_chain
+from pirate_speak.chain import chain as pirate_speak_chain
+from vertexai_chuck_norris.chain import chain as vertexai_chuck_norris_chain
+
+app = FastAPI()
+
+
+@app.get("/")
+async def redirect_root_to_docs():
+    return RedirectResponse("/docs")
+
+
+add_routes(app, rag_opensearch_chain, path="/rag-opensearch")
+add_routes(app, pirate_speak_chain, path="/pirate-speak")
+add_routes(app, vertexai_chuck_norris_chain, path="/vertexai-chuck-norris")
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
