@@ -5,10 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# import packages
-# from vertexai_chuck_norris.chain import chain as vertexai_chuck_norris_chain
 from rag_opensearch import chain as rag_opensearch_chain
-from pirate_speak.chain import chain as pirate_speak_chain
 from vertexai_chuck_norris.chain import chain as vertexai_chuck_norris_chain
 
 app = FastAPI()
@@ -20,7 +17,6 @@ async def redirect_root_to_docs():
 
 
 add_routes(app, rag_opensearch_chain, path="/rag-opensearch")
-add_routes(app, pirate_speak_chain, path="/pirate-speak")
 add_routes(app, vertexai_chuck_norris_chain, path="/vertexai-chuck-norris")
 
 
